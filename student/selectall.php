@@ -1,1 +1,1 @@
-<?php include "../databaseManager.php";echo selectAll("test", "student"); ?>
+<?php include "../databaseManager.php";echo selectAll("student"); ?>

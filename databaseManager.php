@@ -6,20 +6,32 @@
         return "../database.properties";
     }
 
-    function getConnection($dbName) {
+    function getConnection() {
         $host = getConfig(getDbProperty(), "host");
         $user = getConfig(getDbProperty(), "user");
         $pass = getConfig(getDbProperty(), "password");
-        $con = mysqli_connect($host, $user, $pass, $dbName);
+        $db = getConfig(getDbProperty(), "database");
+        $con = mysqli_connect($host, $user, $pass, $db);
         $con->set_charset("utf8");
         return $con;
     }
 
-    function selectAll($dbName, $table) {
-        $link = getConnection($dbName);
-        $result = mysqli_query($link, "SELECT * FROM $table");
-        return toJson($result);
+    function selectAll($table) {
+        $link = getConnection();
+        $result = mysqli_query($link, "SELECT * FROM $table;");
+        return arrayToJson($result);
         mysqli_close($link);
+    }
+
+    function selectOne($table, $id) {
+        $link = getConnection();
+        $result = mysqli_query($link, "SELECT * FROM $table WHERE ID = $id;");
+        return objectToJson($result);
+        mysqli_close($link);
+    }
+
+    function insert($table) {
+
     }
 
 ?>

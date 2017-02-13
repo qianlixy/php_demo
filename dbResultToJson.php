@@ -23,7 +23,7 @@
         return "\"$field->name\":$wrap$value$wrap";
     }
 
-    function toJson($result) {
+    function arrayToJson($result) {
         if($result->num_rows<=0) return "[]";
         $fields = $result->fetch_fields();
         $json = "[";
@@ -41,6 +41,21 @@
             $count++;
         }
         $json = $json."]";
+        return $json;
+    }
+
+    function objectToJson($result) {
+        if($result->num_rows<=0) return "{}";
+        $fields = $result->fetch_fields();
+        $row = $result->fetch_assoc();
+        $json = "{";
+        for($i=0;$i<count($fields);$i++) {
+            if(0!=$i) $json = $json.",";
+            $fieldName = $fields[$i]->name;
+            $fieldContent = doColumn($fields[$i], $row[$fieldName]);
+            $json = $json.$fieldContent;
+        }
+        $json = $json."}";
         return $json;
     }
 ?>
