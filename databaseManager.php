@@ -6,6 +6,15 @@
         return "../database.properties";
     }
 
+    function getTableFields($result) {
+        $arr = $result->fetch_fields();
+        $fieldsArr = array();
+        for($i=0;$i<count($arr);$i++) {
+            $fieldsArr[$i]=$arr[$i];
+        }
+        return $fieldsArr;
+    }
+
     function getConnection() {
         $host = getConfig(getDbProperty(), "host");
         $user = getConfig(getDbProperty(), "user");
@@ -30,8 +39,37 @@
         mysqli_close($link);
     }
 
-    function insert($table) {
+    function insert($table, $student) {
+        $link = getConnection();
+        $result = mysqli_query($link, "SELECT * FROM $table LIMIT 0;");
+        $fields = getTableFields($result);
+        $sql = "INSERT INTO $table VALUES(";
+        foreach ($fields as $field) {
+            $fieldName = $field->name;
+            $value = "";
+            if(!array_key_exists($fieldName, $student)) {
+                $value = "NULL";
+            } else {
+                $value = "'".$student[$fieldName]."'";
+            }
+            $sql = $sql.$value.",";
+        }
+        $sql = substr($sql, 0, strlen($sql)-1).");";
+        mysqli_query($link, $sql);
+        mysqli_close($link);
+    }
 
+    function update($table, $student) {
+        if(!array_key_exists("id", $student)) throw new Exception("id不能為空");
+        $link = getConnection();
+        $sql = "UPDATE $table SET ";
+        foreach ($student as $key => $value) {
+            $sql = $sql.$key."='".$value."', ";
+        }
+        $sql = substr($sql, 0, strlen($sql)-2);
+        $sql = $sql." WHERE id = ".$student['id'];
+        mysqli_query($link, $sql);
+        mysqli_close($link);
     }
 
 ?>

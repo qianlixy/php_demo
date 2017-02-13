@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>修改</title>
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <form action="http://localhost/student/update.php" method="post">
+        <input type="hidden" name="id" value="1">
+        姓名：<input type="text" name="name"><br>
+        學號：<input type="text" name="card"><br>
+        性別：<input type="text" name="sex"><br>
+        <input type="submit" value="修改">
+        <input type="button" onclick="jsonSubmit()" value="json修改">
+    </form>
+    <script type="text/javascript">
+        function jsonSubmit() {
+            $.post("http://localhost/student/update.php", $("form").serialize(), function(data) {
+                console.log(data);
+            });
+        }
+    </script>
+</body>
+</html>
