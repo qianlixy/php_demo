@@ -34,13 +34,20 @@
         }
         $link = getConnection();
         $result = mysqli_query($link, "SELECT * FROM $table $limitSql;");
-        $countResult = mysqli_query($link, "SELECT COUNT(*) FROM $table;");
-        $totalSize = $countResult->fetch_row()[0];
-        $page['totalSize'] = $totalSize;
-        $page['totalPage'] = floor($totalSize / $pageSize) + ($totalSize % $pageSize == 0 ? 0 : 1);
-        $page['data'] = arrayToJson($result);
+		$data = arrayToJson($result);
+		if(!empty($page)) {
+			$countResult = mysqli_query($link, "SELECT COUNT(*) FROM $table;");
+			$totalSize = $countResult->fetch_row()[0];
+			$page['totalSize'] = $totalSize;
+			$page['totalPage'] = floor($totalSize / $pageSize) + ($totalSize % $pageSize == 0 ? 0 : 1);
+			$page['data'] = $data;
+		}
         mysqli_close($link);
-        return $page;
+		if(!empty($page)) {
+			return $page;
+		} else {
+        	return $data;
+		}
     }
 
     function selectAll($table) {
