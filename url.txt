@@ -1,13 +1,19 @@
-»ñÈ¡È«²¿Ñ§ÉúĞÅÏ¢
+æŸ¥è¯¢å…¨éƒ¨
 http://localhost/server/student/selectall.php
 
-»ñÈ¡Ò»¸öÑ§ÉúĞÅÏ¢
-http://localhost/server/student/selectont.php?id=1
+æŸ¥è¯¢å•ä¸ªä¿¡æ¯
+http://localhost/server/student/selectont.php
+ä¾‹å­ï¼šhttp://localhost/server/student/selectont.php?id=1
 
-Ìí¼ÓÒ»¸öÑ§ÉúĞÅÏ¢
+æ–°å¢ä¿¡æ¯
 http://localhost/server/student/insert.php
-Àı×Ó£ºhttp://localhost/server/student/test-insert.html
+ä¾‹å­ï¼šhttp://localhost/server/student/test-insert.html
 
-ĞŞ¸ÄÒ»¸öÑ§ÉúĞÅÏ¢
+ä¿®æ”¹ä¿¡æ¯
 http://localhost/server/student/update.php
-Àı×Ó£ºhttp://localhost/server/student/test-update.html
+ä¾‹å­ï¼šhttp://localhost/server/student/test-update.html
+
+åˆ é™¤ä¿¡æ¯
+http://localhost/server/student/delete.php
+ä¾‹å­ï¼šhttp://localhost/server/student/delete.php?id=1
+æˆ– http://localhost/server/student/delete.php?ids=1,2,3
