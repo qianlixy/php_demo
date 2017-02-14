@@ -1,9 +1,9 @@
-查询全部
+﻿查询全部
 http://localhost/server/student/selectall.php
 
 查询单个信息
 http://localhost/server/student/selectont.php
-例子：http://localhost/server/student/selectont.php?id=1
+例子：
 
 新增信息
 http://localhost/server/student/insert.php
