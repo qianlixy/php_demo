@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分页查询</title>
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <h1 id="header">测试时将分页url换成本地的url</h1>
+    <div id="content"></div>
+    <h1></h1>
+    <span>第 <span id="currentPage"></span> 页 /</span>
+    <span>共 <span id="totalPage"></span> 页</span>
+    <a id="first" href="javascript:;">首页</a>
+    <a id="prev" href="javascript:;">上一页</a>
+    <a id="next" href="javascript:;">下一页</a>
+    <a id="end" href="javascript:;">尾页</a>
+    <script type="text/javascript">
+        page(1, 5);
+        function page(currentPage, pageSize) {
+            $.post("http://localhost:10000/server/student/selectpage.php?currentPage="+currentPage+"&pageSize="+pageSize, function(page) {
+                $("#content").html("");
+                $.each(page.data, function(i, n) {
+                    $("#content").append(JSON.stringify(n));
+                    $("#content").append("<br/>");
+                });
+                $("#currentPage").text(page.currentPage);
+                $("#totalPage").text(page.totalPage);
+                $("#first").attr("href", "javascript:page(1, "+page.pageSize+");");
+                $("#end").attr("href", "javascript:page("+page.totalPage+", "+page.pageSize+");");
+                $("#prev").attr("href", "javascript:page("+(page.currentPage-1)+", "+page.pageSize+");");
+                $("#next").attr("href", "javascript:page("+(page.currentPage+1)+", "+page.pageSize+");");
+            }, "json");
+        }
+    </script>
+</body>
+</html>

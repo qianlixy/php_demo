@@ -32,12 +32,15 @@
             $pageSize = $page["pageSize"];
             $limitSql = "LIMIT ".($currentPage-1)*$pageSize.", ".$pageSize;
         }
-        echo $limitSql;
         $link = getConnection();
         $result = mysqli_query($link, "SELECT * FROM $table $limitSql;");
-        $jsonstr = arrayToJson($result);
+        $countResult = mysqli_query($link, "SELECT COUNT(*) FROM $table;");
+        $totalSize = $countResult->fetch_row()[0];
+        $page['totalSize'] = $totalSize;
+        $page['totalPage'] = floor($totalSize / $pageSize) + ($totalSize % $pageSize == 0 ? 0 : 1);
+        $page['data'] = arrayToJson($result);
         mysqli_close($link);
-        return $jsonstr;
+        return $page;
     }
 
     function selectAll($table) {

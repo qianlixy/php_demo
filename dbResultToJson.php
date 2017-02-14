@@ -20,7 +20,7 @@
 
     function doColumn($field, $value) {
 		$wrapValue = "\"\"";
-		if($value) {
+		if($value!="") {
 			$wrap = getColumnWrap($field);
 			$wrapValue = $wrap.$value.$wrap;
 		}
