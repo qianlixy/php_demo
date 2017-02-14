@@ -72,4 +72,16 @@
         mysqli_close($link);
     }
 
+    function delete($table, $ids) {
+        if(count($ids) <= 0) throw new Exception("ids不能為空");
+        $link = getConnection();
+        $sql = "DELETE FROM $table WHERE ID IN (";
+        foreach ($ids as $id) {
+            $sql = $sql."'".$id."', ";
+        }
+        $sql = substr($sql, 0, strlen($sql)-2).");";
+        mysqli_query($link, $sql);
+        mysqli_close($link);
+    }
+
 ?>
