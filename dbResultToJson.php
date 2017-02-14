@@ -19,8 +19,12 @@
     }
 
     function doColumn($field, $value) {
-        $wrap = getColumnWrap($field);
-        return "\"$field->name\":$wrap$value$wrap";
+		$wrapValue = "\"\"";
+		if($value) {
+			$wrap = getColumnWrap($field);
+			$wrapValue = $wrap.$value.$wrap;
+		}
+        return "\"$field->name\":$wrapValue";
     }
 
     function arrayToJson($result) {
