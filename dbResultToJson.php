@@ -20,7 +20,8 @@
 
     function doColumn($field, $value) {
         $wrap = getColumnWrap($field);
-        return "\"$field->name\":$wrap$value$wrap";
+        $fieldName = strtolower($field->name);
+        return "\"$fieldName\":$wrap$value$wrap";
     }
 
     function arrayToJson($result) {

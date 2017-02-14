@@ -25,18 +25,31 @@
         return $con;
     }
 
-    function selectAll($table) {
+    function selectPage($table, $page) {
+        $limitSql = "";
+        if(!empty($page)) {
+            $currentPage = $page["currentPage"];
+            $pageSize = $page["pageSize"];
+            $limitSql = "LIMIT ".($currentPage-1)*$pageSize.", ".$pageSize;
+        }
+        echo $limitSql;
         $link = getConnection();
-        $result = mysqli_query($link, "SELECT * FROM $table;");
-        return arrayToJson($result);
+        $result = mysqli_query($link, "SELECT * FROM $table $limitSql;");
+        $jsonstr = arrayToJson($result);
         mysqli_close($link);
+        return $jsonstr;
+    }
+
+    function selectAll($table) {
+        return selectPage($table, array());
     }
 
     function selectOne($table, $id) {
         $link = getConnection();
         $result = mysqli_query($link, "SELECT * FROM $table WHERE ID = $id;");
-        return objectToJson($result);
+        $jsonstr=objectToJson($result);
         mysqli_close($link);
+        return $jsonstr;
     }
 
     function insert($table, $student) {
